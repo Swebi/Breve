@@ -20,9 +20,6 @@ app.use(
 );
 app.use("/api/", shortUrl);
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
 
 app.listen(port, () => {
   console.log(`Server started succesfully on port : ${port}`);
