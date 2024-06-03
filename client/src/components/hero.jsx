@@ -4,11 +4,11 @@ import { TypeAnimation } from "react-type-animation";
 
 const Hero = () => {
   return (
-    <div className="flex flex-col w-screen items-center mt-24 gap-3">
-      <h1 className="bg-gradient-to-r from-teal-300 via-sky-300 to-sky-600 bg-clip-text text-transparent text-[60px] font-extrabold">
+    <div className="flex flex-col w-screen items-center gap-3 mb-28">
+      <h1 className="bg-gradient-to-r from-teal-300 via-sky-300 to-sky-600 bg-clip-text text-transparent text-[60px] font-extrabold select-none">
         Shorten. Share. Simplify.
       </h1>
-      <h1 className="text-white text-lg font-light text-center">
+      <h1 className="text-white text-lg font-light text-center select-none">
         Introducing Breve - The link shortener redefined. <br /> Shorten URLs,
         generate QR codes, share links, delve into detailed analytics. <br />
         Effortlessly, All in one place. <br />
