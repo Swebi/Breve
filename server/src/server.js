@@ -18,7 +18,7 @@ app.use(
     credentials: true,
   })
 );
-app.use("/api/", shortUrl);
+app.use("/s/", shortUrl);
 
 
 app.listen(port, () => {
