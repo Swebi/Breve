@@ -10,7 +10,7 @@ const shortUrlSchema = new mongoose.Schema(
     shortUrl: {
       type: String,
       required: true,
-      default: () => nanoid().substring(1, 6)
+      default: () => nanoid().substring(1, 6),
     },
     clicks: {
       type: Number,
@@ -18,7 +18,7 @@ const shortUrlSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 export const urlModel = mongoose.model("ShortUrl", shortUrlSchema);
