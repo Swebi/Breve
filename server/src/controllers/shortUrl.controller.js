@@ -27,6 +27,20 @@ export const getUrl = async (req, res) => {
   }
 };
 
+export const getUrlDetails = async (req, res) => {
+  try {
+    const shortUrl = await urlModel.findOne({ shortUrl: req.params.id });
+    if (shortUrl) {
+      res.status(201).send(shortUrl);
+    } else {
+      res.status(404).send("URL doesn't exist");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Something went wrong");
+  }
+};
+
 export const deleteUrl = async (req, res) => {
   try {
     const shortUrl = await urlModel.findOne({ shortUrl: req.params.id });

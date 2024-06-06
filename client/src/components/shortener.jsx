@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { formSchema } from "@/helpers/formSchema";
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-
 import {
   Dialog,
   DialogContent,
@@ -26,9 +25,11 @@ import {
 
 import axios from "axios";
 import { serverUrl } from "@/helpers/Constants";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Spinner from "./spinner";
 import ShortenedDialog from "./shortenedDialog";
+import QrDialog from "./qrdialog";
+import { LinksContext } from "@/contexts/linksContext";
 
 export function ShortenerForm() {
   const [urlResponse, setUrlResponse] = useState(null);
@@ -53,7 +54,7 @@ export function ShortenerForm() {
     },
   });
 
-  // 2. Define a submit handler.
+  const { links, setLinks } = useContext(LinksContext);
 
   async function onSubmit(values) {
     // Do something with the form values.
@@ -67,8 +68,10 @@ export function ShortenerForm() {
         fullUrl: values.fullUrl,
       });
       setUrlResponse(response.data);
-      console.log(response.data);
+      console.log(response.data.shortUrl);
       setDialog(true);
+
+      setLinks([...links, response.data.shortUrl]);
     } catch (error) {
       setError(error);
       console.log(`The error is ${error}`);
@@ -85,7 +88,7 @@ export function ShortenerForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex justify-start items-start mt-6"
+          className=" flex flex-col md:flex-row  justify-center items-center md:justify-start md:items-start gap-4 md:gap-1 mt-2 md:mt-6"
         >
           <FormField
             control={form.control}
@@ -94,7 +97,7 @@ export function ShortenerForm() {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="https://breve.vercel.app"
+                    placeholder="https://breeve.vercel.app"
                     {...field}
                     className="bg-[#181E29] text-[#C9CED6] w-96 p-5 border-none"
                     autoComplete="off"
@@ -115,7 +118,18 @@ export function ShortenerForm() {
       </Form>
       <Dialog open={dialog} onOpenChange={setDialog}>
         <DialogContent className="bg-[#0B0F1B] border-none w-fit">
-          <ShortenedDialog urlResponse={urlResponse} />
+          <Tabs defaultValue="links" className="w-fit dark ">
+            <TabsList>
+              <TabsTrigger value="links">Links</TabsTrigger>
+              <TabsTrigger value="qr">QR Code</TabsTrigger>
+            </TabsList>
+            <TabsContent value="links">
+              <ShortenedDialog urlResponse={urlResponse} />
+            </TabsContent>
+            <TabsContent value="qr">
+              <QrDialog urlResponse={urlResponse} />
+            </TabsContent>
+          </Tabs>
         </DialogContent>
       </Dialog>
     </>

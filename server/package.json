@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "This project contains URL shortener apis",
   "type": "module",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/server"
+    "dev": "nodemon ./index.js"
   },
   "author": "Suhayb",
   "license": "ISC",
